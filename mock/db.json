@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "张三",
+      "email": "zhangsan@example.com",
+      "age": 28
+    },
+    {
+      "id": 2,
+      "name": "李四",
+      "email": "lisi@example.com",
+      "age": 32
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "React 入门教程",
+      "content": "这是一篇关于 React 的教程...",
+      "authorId": 1,
+      "createdAt": "2024-01-01"
+    },
+    {
+      "id": 2,
+      "title": "Vite 配置指南",
+      "content": "Vite 是一个现代化的前端构建工具...",
+      "authorId": 2,
+      "createdAt": "2024-01-02"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "postId": 1,
+      "content": "很好的教程！",
+      "author": "王五"
+    }
+  ]
+}
