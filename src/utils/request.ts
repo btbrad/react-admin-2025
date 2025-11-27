@@ -2,6 +2,7 @@ import { message } from 'antd'
 import axios, { AxiosError } from 'axios'
 import { hideLoading, showLoading } from './loading'
 import { useNavigate } from 'react-router-dom'
+import storage from './storage'
 
 // 创建实例
 const instance = axios.create({
@@ -15,7 +16,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     showLoading()
-    const token = localStorage.getItem('token')
+    const token = storage.get('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -35,7 +36,7 @@ instance.interceptors.response.use(
     const data = response.data
     if (data.code === 401) {
       message.error(data.msg)
-      localStorage.removeItem('token')
+      storage.remove('token')
       useNavigate()('/login')
     } else if (data.code !== 200) {
       message.error(data.msg)
