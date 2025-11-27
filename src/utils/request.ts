@@ -6,7 +6,7 @@ import storage from './storage'
 
 // 创建实例
 const instance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: import.meta.env.VITE_BASE_API,
   timeout: 8000,
   timeoutErrorMessage: '请求超时，请稍后重试',
   withCredentials: true
