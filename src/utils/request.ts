@@ -1,6 +1,7 @@
 import { message } from 'antd'
 import axios, { AxiosError } from 'axios'
 import { hideLoading, showLoading } from './loading'
+import { useNavigate } from 'react-router-dom'
 
 // 创建实例
 const instance = axios.create({
@@ -35,7 +36,7 @@ instance.interceptors.response.use(
     if (data.code === 401) {
       message.error(data.msg)
       localStorage.removeItem('token')
-      location.href = '/login'
+      useNavigate()('/login')
     } else if (data.code !== 200) {
       message.error(data.msg)
       return Promise.reject(data)
@@ -50,10 +51,10 @@ instance.interceptors.response.use(
 )
 
 export default {
-  get(url: string, params: unknown) {
+  get<T>(url: string, params: unknown): Promise<T> {
     return instance.get(url, { params })
   },
-  post(url: string, data: unknown) {
+  post<T>(url: string, data: unknown): Promise<T> {
     return instance.post(url, data)
   }
 }
