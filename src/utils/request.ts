@@ -1,4 +1,4 @@
-import { message } from 'antd'
+import { message } from '@/utils/AntdGlobal'
 import axios, { AxiosError } from 'axios'
 import { hideLoading, showLoading } from './loading'
 import storage from './storage'

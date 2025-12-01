@@ -1,6 +1,6 @@
 import { login } from '@/api/login'
 import type { LoginParams } from '@/types/api'
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input, App } from 'antd'
 import storage from '@/utils/storage'
 import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
@@ -12,6 +12,7 @@ type FieldType = {
 
 const Login = () => {
   const navigate = useNavigate()
+  const { message } = App.useApp()
 
   const onFinish = async (values: LoginParams) => {
     const params = {
