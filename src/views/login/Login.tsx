@@ -4,6 +4,7 @@ import { Button, Form, Input, App } from 'antd'
 import storage from '@/utils/storage'
 import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
+import { useState } from 'react'
 
 type FieldType = {
   username?: string
@@ -14,12 +15,16 @@ const Login = () => {
   const navigate = useNavigate()
   const { message } = App.useApp()
 
+  const [loading, setLoading] = useState(false)
+
   const onFinish = async (values: LoginParams) => {
+    setLoading(true)
     const params = {
       username: values.username,
       password: values.password
     }
     const data = await login(params)
+    setLoading(false)
     storage.set('token', data)
     message.success('登录成功')
     const searchParams = new URLSearchParams(window.location.search)
@@ -41,7 +46,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item label={null}>
-            <Button type='primary' htmlType='submit' block>
+            <Button type='primary' htmlType='submit' block loading={loading}>
               登录
             </Button>
           </Form.Item>
