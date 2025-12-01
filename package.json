@@ -13,6 +13,7 @@
     "dev:mock": "concurrently \"npm run dev\" \"npm run mock\""
   },
   "dependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "antd": "^5.29.1",
     "axios": "^1.13.2",
     "dayjs": "^1.11.19",

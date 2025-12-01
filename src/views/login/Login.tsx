@@ -1,8 +1,9 @@
-import request from '@/utils/request'
-import { useEffect } from 'react'
-
+import { login } from '@/api/login'
+import type { LoginParams } from '@/types/api'
+import { Button, Form, Input, message } from 'antd'
+import storage from '@/utils/storage'
+import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
-import { Button, Form, Input } from 'antd'
 
 type FieldType = {
   username?: string
@@ -10,39 +11,32 @@ type FieldType = {
 }
 
 const Login = () => {
-  const onFinish = (values: unknown) => {
-    console.log('Success:', values)
-  }
+  const navigate = useNavigate()
 
-  const handleLogin = () => {
-    request
-      .post('/login', {
-        username: 'admin',
-        password: '123456'
-      })
-      .then(data => {
-        console.log('Login successful:', data)
-      })
-      .catch(error => {
-        console.error('Login failed:', error)
-      })
+  const onFinish = async (values: LoginParams) => {
+    const params = {
+      username: values.username,
+      password: values.password
+    }
+    const data = await login(params)
+    storage.set('token', data)
+    message.success('登录成功')
+    const searchParams = new URLSearchParams(window.location.search)
+    const redirect = searchParams.get('callback') || '/'
+    navigate(redirect)
   }
-
-  useEffect(() => {
-    handleLogin()
-  }, [])
 
   return (
     <div className={styles.login}>
       <div className={styles.loginWrapper}>
         <div className={styles.title}>系统登录</div>
         <Form name='basic' wrapperCol={{ span: 24 }} onFinish={onFinish} autoComplete='off'>
-          <Form.Item<FieldType> name='username' rules={[{ required: true, message: 'Please input your username!' }]}>
-            <Input />
+          <Form.Item<FieldType> name='username' rules={[{ required: true, message: '请输入用户名!' }]}>
+            <Input placeholder='请输入用户名' />
           </Form.Item>
 
-          <Form.Item<FieldType> name='password' rules={[{ required: true, message: 'Please input your password!' }]}>
-            <Input.Password />
+          <Form.Item<FieldType> name='password' rules={[{ required: true, message: '请输入密码!' }]}>
+            <Input.Password placeholder='请输入密码' />
           </Form.Item>
 
           <Form.Item label={null}>

@@ -1,8 +1,8 @@
 import { message } from 'antd'
 import axios, { AxiosError } from 'axios'
 import { hideLoading, showLoading } from './loading'
-import { useNavigate } from 'react-router-dom'
 import storage from './storage'
+import type { Result } from '@/types/api'
 
 // 创建实例
 const instance = axios.create({
@@ -33,12 +33,13 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     hideLoading()
-    const data = response.data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data: Result<any> = response.data
     if (data.code === 401) {
       message.error(data.msg)
       storage.remove('token')
-      useNavigate()('/login')
-    } else if (data.code !== 200) {
+      window.location.href = '/login'
+    } else if (data.code !== 1) {
       message.error(data.msg)
       return Promise.reject(data)
     }
