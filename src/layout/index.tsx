@@ -3,7 +3,7 @@ import { Layout, theme, Watermark } from 'antd'
 import { Outlet } from 'react-router-dom'
 import NavHeader from '@/components/NavHeader'
 
-const { Header, Content, Footer, Sider } = Layout
+const { Content, Footer, Sider } = Layout
 
 const App: React.FC = () => {
   const {
@@ -26,9 +26,7 @@ const App: React.FC = () => {
           侧边栏
         </Sider>
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
-            <NavHeader />
-          </Header>
+          <NavHeader />
           <Content style={{ margin: '24px 16px 0' }}>
             <div
               style={{
