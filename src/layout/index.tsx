@@ -7,13 +7,16 @@ import SideMenu from '@/components/Menu'
 import { getUserInfoApi } from '@/api/user'
 
 import styles from './index.module.less'
+import { useUserStore } from '@/store'
 
 const { Content, Sider } = Layout
 
 const App: React.FC = () => {
+  const store = useUserStore()
   const getUserInfo = async () => {
     const data = await getUserInfoApi()
     console.log(data)
+    store.updateUserInfo(data)
   }
 
   useEffect(() => {
