@@ -1,6 +1,6 @@
 import { createHashRouter, Navigate } from 'react-router-dom'
 import Login from '@/views/login/Login'
-import Welcome from '@/views/Welcome.tsx'
+import Welcome from '@/views/welcome'
 import NoAuth from '@/views/403.tsx'
 import NotFount from '@/views/404.tsx'
 import Layout from '@/layout/index'
