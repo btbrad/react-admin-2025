@@ -2,6 +2,7 @@ import React from 'react'
 import { Layout, theme, Watermark } from 'antd'
 import { Outlet } from 'react-router-dom'
 import NavHeader from '@/components/NavHeader'
+import NavFooter from '@/components/NavFooter'
 
 const { Content, Footer, Sider } = Layout
 
@@ -39,7 +40,7 @@ const App: React.FC = () => {
               <Outlet />
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©{new Date().getFullYear()} Created by Ant UED</Footer>
+          <NavFooter />
         </Layout>
       </Layout>
     </Watermark>
