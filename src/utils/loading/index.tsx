@@ -15,7 +15,7 @@ export const showLoading = (tip?: string) => {
 export const hideLoading = () => {
   if (count < 0) return
   count--
-  if (count !== 0) return
+  // if (count !== 0) return
   const dom = document.getElementById('loading')
   if (dom) {
     document.body.removeChild(dom)
