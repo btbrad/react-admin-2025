@@ -1,4 +1,21 @@
 {
+  "getUserInfo": {
+    "code": 1,
+    "data": {
+      "createdId": 1,
+      "deptId": 1,
+      "deptName": "开发部",
+      "role": 1,
+      "roleList": 1,
+      "state": 1,
+      "userEmail": "zhangsan@example.com",
+      "userId": 1,
+      "userImage": "https://example.com/avatar.png",
+      "userName": "张三",
+      "_id": 1
+    },
+    "msg": "获取用户信息成功"
+  },
   "users": [
     {
       "id": 1,

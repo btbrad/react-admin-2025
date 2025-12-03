@@ -62,10 +62,10 @@ interface IConfig {
 }
 
 export default {
-  get<T>(url: string, params: unknown, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
+  get<T>(url: string, params?: unknown, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
     return instance.get(url, { params, ...options })
   },
-  post<T>(url: string, data: unknown, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
+  post<T>(url: string, data?: unknown, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
     return instance.post(url, data, options)
   }
 }
