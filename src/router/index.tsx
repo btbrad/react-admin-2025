@@ -4,6 +4,7 @@ import Welcome from '@/views/welcome'
 import NoAuth from '@/views/403.tsx'
 import NotFount from '@/views/404.tsx'
 import Layout from '@/layout/index'
+import Dashboard from '@/views/dashboard'
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
       {
         path: '/welcome',
         element: <Welcome />
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard />
       }
     ]
   },
