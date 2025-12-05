@@ -21,4 +21,13 @@ export interface UserItem {
   createId: number
   deptName: string
   userImg: string
+  mobile: string
+  job: string
+}
+
+export interface DashboardReport {
+  driverCount: number
+  totalMoney: number
+  orderCount: number
+  cityNum: number
 }

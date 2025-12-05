@@ -1,3 +1,4 @@
 {
-  "/user/getUserInfo": "/getUserInfo"
+  "/user/getUserInfo": "/getUserInfo",
+  "/order/dashboard/getReportData": "/dashboardReport"
 }

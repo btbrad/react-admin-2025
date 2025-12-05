@@ -12,9 +12,21 @@
       "userId": 1,
       "userImage": "https://example.com/avatar.png",
       "userName": "张三",
-      "_id": 1
+      "_id": 1,
+      "mobile": "13800000000",
+      "job": "前端开发"
     },
     "msg": "获取用户信息成功"
+  },
+  "dashboardReport": {
+    "code": 1,
+    "data": {
+      "driverCount": 150,
+      "totalMoney": 1250000,
+      "orderCount": 3200,
+      "cityNum": 25
+    },
+    "msg": "获取报表数据成功"
   },
   "users": [
     {

@@ -3,42 +3,56 @@ import type { DescriptionsProps } from 'antd'
 import * as echarts from 'echarts'
 
 import styles from './index.module.less'
-import { useEffect } from 'react'
-
-const items: DescriptionsProps['items'] = [
-  {
-    key: '1',
-    label: '用户ID',
-    children: '100001'
-  },
-  {
-    key: '2',
-    label: '邮箱',
-    children: 'test@example.com'
-  },
-  {
-    key: '3',
-    label: '状态',
-    children: '在职'
-  },
-  {
-    key: '4',
-    label: '手机号',
-    children: '13899990000'
-  },
-  {
-    key: '5',
-    label: '岗位',
-    children: '前端工程师'
-  },
-  {
-    key: '6',
-    label: '部门',
-    children: '大前端'
-  }
-]
+import { useEffect, useState } from 'react'
+import { useUserStore } from '@/store'
+import { getReportDataApi } from '@/api/dashboard'
+import type { DashboardReport } from '@/types/api'
+import { formatMoney } from '@/utils'
 
 const Dashboard: React.FC = () => {
+  const userInfo = useUserStore(state => state.userInfo)
+
+  const items: DescriptionsProps['items'] = [
+    {
+      key: '1',
+      label: '用户ID',
+      children: userInfo.userId
+    },
+    {
+      key: '2',
+      label: '邮箱',
+      children: userInfo.userEmail
+    },
+    {
+      key: '3',
+      label: '状态',
+      children: userInfo.state === 1 ? '在职' : '离职'
+    },
+    {
+      key: '4',
+      label: '手机号',
+      children: userInfo?.mobile
+    },
+    {
+      key: '5',
+      label: '岗位',
+      children: userInfo.job
+    },
+    {
+      key: '6',
+      label: '部门',
+      children: userInfo.deptName
+    }
+  ]
+
+  const [report, setReport] = useState<DashboardReport>()
+
+  const getReportData = async () => {
+    const res = await getReportDataApi()
+    console.log('Dashboard Report Data:', res)
+    setReport(res)
+  }
+
   useEffect(() => {
     const lineChartDom = document.getElementById('lineChart')
     const lineChartsInstance = echarts.init(lineChartDom)
@@ -184,6 +198,7 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
+    getReportData()
   }, [])
 
   return (
@@ -195,19 +210,19 @@ const Dashboard: React.FC = () => {
       <div className={styles.report}>
         <div className={styles.card}>
           <div className='title'>司机数量</div>
-          <div className={styles.data}>100个</div>
+          <div className={styles.data}>{report?.driverCount}个</div>
         </div>
         <div className={styles.card}>
           <div className='title'>总流水</div>
-          <div className={styles.data}>10000元</div>
+          <div className={styles.data}>{formatMoney(report?.totalMoney.toString() || '0')}元</div>
         </div>
         <div className={styles.card}>
           <div className='title'>总订单</div>
-          <div className={styles.data}>2000单</div>
+          <div className={styles.data}>{report?.orderCount}单</div>
         </div>
         <div className={styles.card}>
           <div className='title'>开通城市</div>
-          <div className={styles.data}>50座</div>
+          <div className={styles.data}>{report?.cityNum}座</div>
         </div>
       </div>
       <div className={styles.chart}>
