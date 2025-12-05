@@ -15,7 +15,6 @@ const App: React.FC = () => {
   const store = useUserStore()
   const getUserInfo = async () => {
     const data = await getUserInfoApi()
-    console.log(data)
     store.updateUserInfo(data)
   }
 

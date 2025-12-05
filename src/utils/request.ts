@@ -38,7 +38,7 @@ instance.interceptors.response.use(
     if (data.code === 401) {
       message.error(data.msg)
       storage.remove('token')
-      window.location.href = '/#/login'
+      location.href = '/#/login?callback=' + encodeURIComponent(location.href)
     } else if (data.code !== 1) {
       if (response.config.showError === false) {
         return Promise.resolve(data)

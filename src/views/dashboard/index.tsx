@@ -1,6 +1,5 @@
 import { Button, Card, Descriptions } from 'antd'
 import type { DescriptionsProps } from 'antd'
-import * as echarts from 'echarts'
 
 import styles from './index.module.less'
 import { useEffect, useState } from 'react'
@@ -8,6 +7,7 @@ import { useUserStore } from '@/store'
 import { getReportDataApi } from '@/api/dashboard'
 import type { DashboardReport } from '@/types/api'
 import { formatMoney } from '@/utils'
+import { useCharts } from '@/hook/useChart'
 
 const Dashboard: React.FC = () => {
   const userInfo = useUserStore(state => state.userInfo)
@@ -49,14 +49,19 @@ const Dashboard: React.FC = () => {
 
   const getReportData = async () => {
     const res = await getReportDataApi()
-    console.log('Dashboard Report Data:', res)
     setReport(res)
   }
 
+  // 初始化折线图
+  const [lineRef, lineChart] = useCharts()
+  // 初始化饼图
+  const [pieCityRef, pieCityChart] = useCharts()
+  const [pieAgeRef, pieAgeChart] = useCharts()
+  // 初始化雷达图
+  const [radarRef, radarChart] = useCharts()
+
   useEffect(() => {
-    const lineChartDom = document.getElementById('lineChart')
-    const lineChartsInstance = echarts.init(lineChartDom)
-    lineChartsInstance.setOption({
+    lineChart?.setOption({
       legend: {
         data: ['订单数量', '流水'],
         show: true,
@@ -93,9 +98,8 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
-    const pieChartCityDom = document.getElementById('pieChartCity')
-    const pieChartsCityInstance = echarts.init(pieChartCityDom)
-    pieChartsCityInstance.setOption({
+
+    pieCityChart?.setOption({
       title: {
         text: '司机城市分布',
         left: 'center'
@@ -129,9 +133,8 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
-    const pieChartAgeDom = document.getElementById('pieChartAge')
-    const pieChartsAgeInstance = echarts.init(pieChartAgeDom)
-    pieChartsAgeInstance.setOption({
+
+    pieAgeChart?.setOption({
       title: {
         text: '司机年龄分布',
         left: 'center'
@@ -166,9 +169,8 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
-    const radarChartDom = document.getElementById('radarChart')
-    const radarChartsInstance = echarts.init(radarChartDom)
-    radarChartsInstance.setOption({
+
+    radarChart?.setOption({
       title: {
         text: '司机模型诊断'
       },
@@ -198,6 +200,9 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
+  }, [lineChart, pieCityChart, pieAgeChart, radarChart])
+
+  useEffect(() => {
     getReportData()
   }, [])
 
@@ -227,20 +232,20 @@ const Dashboard: React.FC = () => {
       </div>
       <div className={styles.chart}>
         <Card title='订单和流水走势图' extra={<Button type='primary'>刷新</Button>}>
-          <div id='lineChart' className={styles.itemChart}></div>
+          <div ref={lineRef} className={styles.itemChart}></div>
         </Card>
       </div>
       <div className={styles.chart}>
         <Card title='司机分布' extra={<Button type='primary'>刷新</Button>}>
           <div className={styles.pieChart}>
-            <div id='pieChartCity' className={styles.itemChart}></div>
-            <div id='pieChartAge' className={styles.itemChart}></div>
+            <div ref={pieCityRef} className={styles.itemChart}></div>
+            <div ref={pieAgeRef} className={styles.itemChart}></div>
           </div>
         </Card>
       </div>
       <div className={styles.chart}>
         <Card title='模型诊断' extra={<Button type='primary'>刷新</Button>}>
-          <div id='radarChart' className={styles.itemChart}></div>
+          <div ref={radarRef} className={styles.itemChart}></div>
         </Card>
       </div>
     </div>
