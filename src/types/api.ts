@@ -31,3 +31,22 @@ export interface DashboardReport {
   orderCount: number
   cityNum: number
 }
+
+export interface DashboardLineData {
+  label: string[]
+  order: number[]
+  money: number[]
+}
+
+export interface DashboardPieData {
+  value: number
+  name: string
+}
+
+export interface DashboardRadarData {
+  indicator: { name: string; max: number }[]
+  data: {
+    name: string[]
+    value: number[]
+  }
+}
