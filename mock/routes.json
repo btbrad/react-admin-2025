@@ -1,4 +1,8 @@
 {
   "/user/getUserInfo": "/getUserInfo",
-  "/order/dashboard/getReportData": "/dashboardReport"
+  "/order/dashboard/getReportData": "/dashboardReport",
+  "/order/dashboard/getLineData": "/dashboardLineData",
+  "/order/dashboard/getPieCityData": "/dashboardPieCityData",
+  "/order/dashboard/getPieAgeData": "/dashboardPieAgeData",
+  "/order/dashboard/getRadarData": "/dashboardRadarData"
 }

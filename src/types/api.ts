@@ -45,8 +45,5 @@ export interface DashboardPieData {
 
 export interface DashboardRadarData {
   indicator: { name: string; max: number }[]
-  data: {
-    name: string[]
-    value: number[]
-  }
+  value: number[]
 }

@@ -4,7 +4,7 @@ import type { DescriptionsProps } from 'antd'
 import styles from './index.module.less'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '@/store'
-import { getReportDataApi } from '@/api/dashboard'
+import { getLineDataApi, getPieAgeDataApi, getPieCityDataApi, getRadarDataApi, getReportDataApi } from '@/api/dashboard'
 import type { DashboardReport } from '@/types/api'
 import { formatMoney } from '@/utils'
 import { useCharts } from '@/hook/useChart'
@@ -61,6 +61,16 @@ const Dashboard: React.FC = () => {
   const [radarRef, radarChart] = useCharts()
 
   useEffect(() => {
+    renderLineChart()
+    renderPieChart1()
+    renderPieChart2()
+    renderRadarChart()
+  }, [lineChart, pieCityChart, pieAgeChart, radarChart])
+
+  // 加载折线图数据
+  const renderLineChart = async () => {
+    if (!lineChart) return
+    const data = await getLineDataApi()
     lineChart?.setOption({
       legend: {
         data: ['订单数量', '流水'],
@@ -78,7 +88,7 @@ const Dashboard: React.FC = () => {
       },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: data.label
       },
       yAxis: {
         type: 'value'
@@ -86,19 +96,24 @@ const Dashboard: React.FC = () => {
       series: [
         {
           name: '订单数量',
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          data: data.order,
           type: 'line',
           smooth: true
         },
         {
           name: '流水',
-          data: [220, 332, 401, 534, 690, 730, 220],
+          data: data.money,
           type: 'line',
           smooth: true
         }
       ]
     })
+  }
 
+  // 加载饼图数据
+  const renderPieChart1 = async () => {
+    if (!pieCityChart) return
+    const data = await getPieCityDataApi()
     pieCityChart?.setOption({
       title: {
         text: '司机城市分布',
@@ -116,13 +131,7 @@ const Dashboard: React.FC = () => {
           name: '司机数量',
           type: 'pie',
           radius: '50%',
-          data: [
-            { value: 1048, name: '北京' },
-            { value: 735, name: '上海' },
-            { value: 580, name: '天津' },
-            { value: 484, name: '重庆' },
-            { value: 300, name: '深圳' }
-          ],
+          data,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -133,7 +142,11 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
+  }
 
+  const renderPieChart2 = async () => {
+    if (!pieAgeChart) return
+    const data = await getPieAgeDataApi()
     pieAgeChart?.setOption({
       title: {
         text: '司机年龄分布',
@@ -152,13 +165,7 @@ const Dashboard: React.FC = () => {
           name: '司机数量',
           type: 'pie',
           radius: '50%',
-          data: [
-            { value: 1048, name: '20岁' },
-            { value: 735, name: '30岁' },
-            { value: 580, name: '40岁' },
-            { value: 484, name: '50岁' },
-            { value: 300, name: '60岁' }
-          ],
+          data,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -169,7 +176,12 @@ const Dashboard: React.FC = () => {
         }
       ]
     })
+  }
 
+  // 加载雷达图数据
+  const renderRadarChart = async () => {
+    if (!radarChart) return
+    const data = await getRadarDataApi()
     radarChart?.setOption({
       title: {
         text: '司机模型诊断'
@@ -179,13 +191,7 @@ const Dashboard: React.FC = () => {
       },
       radar: {
         // shape: 'circle',
-        indicator: [
-          { name: '服务态度' },
-          { name: '在线时长' },
-          { name: '接单率' },
-          { name: '评分' },
-          { name: '关注度' }
-        ]
+        indicator: data.indicator
       },
       series: [
         {
@@ -193,14 +199,14 @@ const Dashboard: React.FC = () => {
           type: 'radar',
           data: [
             {
-              value: [4200, 3000, 20000, 35000, 50000, 18000],
+              value: data.value,
               name: '司机模型诊断'
             }
           ]
         }
       ]
     })
-  }, [lineChart, pieCityChart, pieAgeChart, radarChart])
+  }
 
   useEffect(() => {
     getReportData()
