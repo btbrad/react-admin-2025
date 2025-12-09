@@ -28,19 +28,31 @@ const UserList: React.FC = () => {
         item.userId = Math.floor(Math.random() * 100000)
         return item
       })
+      // setData(res.list)
       setData(list)
-      setTotal(res.page.total)
-      setPagination({
-        current: res.page.pageNum,
-        pageSize: res.page.pageSize
-      })
+      // setTotal(res.page.total)
+      setTotal(list.length)
+      // setPagination({
+      //   current: res.page.pageNum,
+      //   pageSize: res.page.pageSize
+      // })
     },
     [form]
   )
 
   useEffect(() => {
+    getUserList({ pageNum: pagination.current, pageSize: pagination.pageSize })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagination.pageSize, getUserList, pagination.current])
+
+  const handleSearch = () => {
     getUserList({ pageNum: 1, pageSize: pagination.pageSize })
-  }, [pagination.pageSize, getUserList])
+  }
+
+  const handleRest = () => {
+    form.resetFields()
+    getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+  }
 
   const columns: TableProps<UserItem>['columns'] = [
     {
@@ -130,10 +142,12 @@ const UserList: React.FC = () => {
           />
         </Form.Item>
         <Form.Item label={null}>
-          <Button className='mr10' type='primary' htmlType='submit'>
+          <Button className='mr10' type='primary' htmlType='submit' onClick={handleSearch}>
             搜索
           </Button>
-          <Button type='default'>重置</Button>
+          <Button type='default' onClick={handleRest}>
+            重置
+          </Button>
         </Form.Item>
       </Form>
       <div className='baseTable'>
@@ -146,7 +160,24 @@ const UserList: React.FC = () => {
             </Button>
           </div>
         </div>
-        <Table rowKey='userId' dataSource={data} columns={columns} bordered rowSelection={{ type: 'checkbox' }} />
+        <Table
+          rowKey='userId'
+          dataSource={data}
+          columns={columns}
+          bordered
+          rowSelection={{ type: 'checkbox' }}
+          pagination={{
+            current: pagination.current,
+            showSizeChanger: true,
+            pageSize: pagination.pageSize,
+            total,
+            showQuickJumper: true,
+            showTotal: total => `共 ${total} 条`,
+            onChange(page, pageSize) {
+              setPagination({ current: page, pageSize })
+            }
+          }}
+        />
       </div>
     </div>
   )
