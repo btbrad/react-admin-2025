@@ -5,6 +5,7 @@ import NoAuth from '@/views/403.tsx'
 import NotFount from '@/views/404.tsx'
 import Layout from '@/layout/index'
 import Dashboard from '@/views/dashboard'
+import User from '@/views/system/user'
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
       {
         path: '/dashboard',
         element: <Dashboard />
+      },
+      {
+        path: '/userList',
+        element: <User />
       }
     ]
   },

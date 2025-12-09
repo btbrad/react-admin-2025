@@ -3,7 +3,7 @@ import router from './router/index.tsx'
 import { ConfigProvider, App as AntdApp } from 'antd'
 import AntdGlobal from './utils/AntdGlobal.ts'
 
-import './App.css'
+import './App.less'
 
 function App() {
   return (
