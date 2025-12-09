@@ -121,7 +121,7 @@ const UserList: React.FC = () => {
             </Button>
           </div>
         </div>
-        <Table rowKey='_id' dataSource={data} columns={columns} bordered rowSelection={{ type: 'checkbox' }} />
+        <Table rowKey='userId' dataSource={data} columns={columns} bordered rowSelection={{ type: 'checkbox' }} />
       </div>
     </div>
   )
