@@ -73,20 +73,49 @@
     },
     "msg": "获取雷达图数据成功"
   },
-  "users": [
-    {
-      "id": 1,
-      "name": "张三",
-      "email": "zhangsan@example.com",
-      "age": 28
+  "userList": {
+    "code": 1,
+    "data": {
+      "list": [
+        {
+          "createId": 1,
+          "deptId": "1",
+          "deptName": "开发部",
+          "role": 1,
+          "roleList": "1",
+          "state": 1,
+          "userEmail": "zhangsan@example.com",
+          "userId": 1,
+          "userImg": "https://example.com/avatar.png",
+          "userName": "张三",
+          "_id": "1",
+          "mobile": "13800000000",
+          "job": "前端开发"
+        },
+        {
+          "createId": 1,
+          "deptId": "1",
+          "deptName": "开发部",
+          "role": 1,
+          "roleList": "1",
+          "state": 1,
+          "userEmail": "zhangsan@example.com",
+          "userId": 2,
+          "userImg": "https://example.com/avatar.png",
+          "userName": "张三",
+          "_id": "2",
+          "mobile": "13800000000",
+          "job": "前端开发"
+        }
+      ],
+      "page": {
+        "pageNum": 1,
+        "pageSize": 10,
+        "total": 2
+      }
     },
-    {
-      "id": 2,
-      "name": "李四",
-      "email": "lisi@example.com",
-      "age": 32
-    }
-  ],
+    "msg": "获取用户列表成功"
+  },
   "posts": [
     {
       "id": 1,

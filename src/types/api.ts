@@ -4,6 +4,15 @@ export interface Result<T = unknown> {
   msg: string
 }
 
+export interface ResultData<T = unknown> {
+  list: T[]
+  page: {
+    pageNum: number
+    pageSize: number
+    total: number
+  }
+}
+
 export interface LoginParams {
   username: string
   password: string
@@ -23,6 +32,12 @@ export interface UserItem {
   userImg: string
   mobile: string
   job: string
+}
+
+export interface UserSearchParams {
+  userId?: number
+  userName?: string
+  state?: number
 }
 
 export interface DashboardReport {

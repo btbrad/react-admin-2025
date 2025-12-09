@@ -1,71 +1,70 @@
+import { getUserListApi } from '@/api/user'
 import type { UserItem } from '@/types/api'
 import { Button, Form, Input, Select, Space, Table } from 'antd'
 import type { TableProps } from 'antd'
+import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
 
 const UserList: React.FC = () => {
-  const dataSource: UserItem[] = [
-    {
-      createId: 1,
-      deptId: '1',
-      deptName: '开发部',
-      role: 1,
-      roleList: '1',
-      state: 1,
-      userEmail: 'zhangsan@example.com',
-      userId: 1,
-      userImg: 'https://example.com/avatar.png',
-      userName: '张三',
-      _id: '1',
-      mobile: '13800000000',
-      job: '前端开发'
-    },
-    {
-      createId: 1,
-      deptId: '1',
-      deptName: '开发部',
-      role: 1,
-      roleList: '1',
-      state: 1,
-      userEmail: 'zhangsan@example.com',
-      userId: 1,
-      userImg: 'https://example.com/avatar.png',
-      userName: '张三',
-      _id: '1',
-      mobile: '13800000000',
-      job: '前端开发'
-    }
-  ]
+  const [data, setData] = useState<UserItem[]>([])
+
+  const getUserList = async () => {
+    const res = await getUserListApi({})
+    setData(res.list)
+  }
+
+  useEffect(() => {
+    getUserList()
+  }, [])
 
   const columns: TableProps<UserItem>['columns'] = [
     {
       title: 'ID',
       dataIndex: 'userId',
-      key: 'id'
+      key: 'userId'
     },
     {
       title: '名称',
       dataIndex: 'userName',
-      key: 'name'
+      key: 'userName'
     },
     {
       title: '邮箱',
       dataIndex: 'userEmail',
-      key: 'email'
+      key: 'userEmail'
     },
     {
       title: '角色',
       dataIndex: 'role',
-      key: 'role'
+      key: 'role',
+      render(value: number) {
+        return {
+          0: '超级管理员',
+          1: '管理员',
+          2: '体验管理员',
+          3: '普通用户'
+        }[value]
+      }
     },
     {
       title: '状态',
       dataIndex: 'state',
-      key: 'state'
+      key: 'state',
+      render(value: number) {
+        return {
+          1: '在职',
+          2: '试用期',
+          3: '离职'
+        }[value]
+      }
     },
     {
       title: '注册时间',
-      dataIndex: 'address',
-      key: 'address'
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render(value: string) {
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      }
     },
     {
       title: '操作',
@@ -122,7 +121,7 @@ const UserList: React.FC = () => {
             </Button>
           </div>
         </div>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table rowKey='_id' dataSource={data} columns={columns} bordered rowSelection={{ type: 'checkbox' }} />
       </div>
     </div>
   )
