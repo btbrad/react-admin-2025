@@ -1,21 +1,46 @@
 import { getUserListApi } from '@/api/user'
-import type { UserItem } from '@/types/api'
+import type { PageParams, UserItem } from '@/types/api'
 import { Button, Form, Input, Select, Space, Table } from 'antd'
 import type { TableProps } from 'antd'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 
 const UserList: React.FC = () => {
-  const [data, setData] = useState<UserItem[]>([])
+  const [form] = Form.useForm()
 
-  const getUserList = async () => {
-    const res = await getUserListApi({})
-    setData(res.list)
-  }
+  const [data, setData] = useState<UserItem[]>([])
+  const [total, setTotal] = useState<number>(0)
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10
+  })
+
+  const getUserList = useCallback(
+    async (params: PageParams) => {
+      const values = form.getFieldsValue()
+      const res = await getUserListApi({
+        ...values,
+        ...params
+      })
+      // 假数据
+      const list = new Array(50).fill({}).map(item => {
+        item = { ...res.list[0] }
+        item.userId = Math.floor(Math.random() * 100000)
+        return item
+      })
+      setData(list)
+      setTotal(res.page.total)
+      setPagination({
+        current: res.page.pageNum,
+        pageSize: res.page.pageSize
+      })
+    },
+    [form]
+  )
 
   useEffect(() => {
-    getUserList()
-  }, [])
+    getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+  }, [pagination.pageSize, getUserList])
 
   const columns: TableProps<UserItem>['columns'] = [
     {
@@ -84,7 +109,7 @@ const UserList: React.FC = () => {
 
   return (
     <div className='userList'>
-      <Form className='searchForm' layout='inline' initialValues={{ state: 0 }}>
+      <Form className='searchForm' form={form} layout='inline' initialValues={{ state: 0 }}>
         <Form.Item name='userId' label='用户ID'>
           <Input placeholder='请输入用户ID' />
         </Form.Item>

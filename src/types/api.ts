@@ -13,6 +13,11 @@ export interface ResultData<T = unknown> {
   }
 }
 
+export interface PageParams {
+  pageNum: number
+  pageSize: number
+}
+
 export interface LoginParams {
   username: string
   password: string
@@ -34,7 +39,7 @@ export interface UserItem {
   job: string
 }
 
-export interface UserSearchParams {
+export interface UserSearchParams extends PageParams {
   userId?: number
   userName?: string
   state?: number

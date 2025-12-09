@@ -4,6 +4,5 @@
   "/order/dashboard/getLineData": "/dashboardLineData",
   "/order/dashboard/getPieCityData": "/dashboardPieCityData",
   "/order/dashboard/getPieAgeData": "/dashboardPieAgeData",
-  "/order/dashboard/getRadarData": "/dashboardRadarData",
-  "/users/list": "/userList"
+  "/order/dashboard/getRadarData": "/dashboardRadarData"
 }
