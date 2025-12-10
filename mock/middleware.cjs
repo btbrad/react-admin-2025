@@ -67,5 +67,18 @@ module.exports = (req, res, next) => {
     // 重写 URL
     req.url = `/userList?${newParams.toString()}`;
   }
+
+  /**
+   * 上传图片
+   */
+  if (req.method === 'POST' && req.path === '/users/upload') {
+    return res.status(200).json({
+      code: 1,
+      data: {
+        file: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      },
+      msg: '上传成功',
+    })
+  }
   next()
 }

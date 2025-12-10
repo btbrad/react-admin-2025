@@ -35,3 +35,12 @@ GET http://localhost:3001/order/dashboard/getRadarData
 ###
 # 获取用户列表
 GET http://localhost:3001/userList?pageNum=1&pageSize=10
+
+###
+# 上传用户头像
+POST http://localhost:3001/users/upload
+Content-Type: multipart/form-data
+--boundary
+Content-Disposition: form-data; name="file"; filename="avatar.png"
+Content-Type: image/png
+--boundary--
