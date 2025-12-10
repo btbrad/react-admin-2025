@@ -4,6 +4,7 @@ import { Button, Form, Input, Select, Space, Table } from 'antd'
 import type { TableProps } from 'antd'
 import { useCallback, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
+import CreateUser from './CreateUser'
 
 const UserList: React.FC = () => {
   const [form] = Form.useForm()
@@ -90,8 +91,8 @@ const UserList: React.FC = () => {
       render(value: number) {
         return {
           1: '在职',
-          2: '试用期',
-          3: '离职'
+          2: '离职',
+          3: '试用期'
         }[value]
       }
     },
@@ -179,6 +180,7 @@ const UserList: React.FC = () => {
           }}
         />
       </div>
+      <CreateUser />
     </div>
   )
 }
