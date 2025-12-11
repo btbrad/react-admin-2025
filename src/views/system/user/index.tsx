@@ -2,9 +2,10 @@ import { getUserListApi } from '@/api/user'
 import type { PageParams, UserItem } from '@/types/api'
 import { Button, Form, Input, Select, Space, Table } from 'antd'
 import type { TableProps } from 'antd'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import CreateUser from './CreateUser'
+import type { IAction } from '@/types/modal'
 
 const UserList: React.FC = () => {
   const [form] = Form.useForm()
@@ -15,6 +16,10 @@ const UserList: React.FC = () => {
     current: 1,
     pageSize: 10
   })
+
+  const userRef = useRef<{
+    open: (type: IAction, data?: UserItem) => void
+  }>(undefined)
 
   const getUserList = useCallback(
     async (params: PageParams) => {
@@ -53,6 +58,10 @@ const UserList: React.FC = () => {
   const handleRest = () => {
     form.resetFields()
     getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+  }
+
+  const handleCreate = () => {
+    userRef.current?.open('create')
   }
 
   const columns: TableProps<UserItem>['columns'] = [
@@ -155,7 +164,9 @@ const UserList: React.FC = () => {
         <div className='headerWrapper'>
           <div className='title'>用户列表</div>
           <div className='action'>
-            <Button type='primary'>新增</Button>
+            <Button type='primary' onClick={handleCreate}>
+              新增
+            </Button>
             <Button type='primary' danger>
               批量删除
             </Button>
@@ -180,7 +191,7 @@ const UserList: React.FC = () => {
           }}
         />
       </div>
-      <CreateUser />
+      <CreateUser mRef={userRef} update={() => getUserList({ pageNum: 1, pageSize: pagination.pageSize })} />
     </div>
   )
 }

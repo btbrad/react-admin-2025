@@ -40,22 +40,52 @@
   "dashboardPieCityData": {
     "code": 1,
     "data": [
-      { "value": 1048, "name": "北京" },
-      { "value": 735, "name": "上海" },
-      { "value": 580, "name": "天津" },
-      { "value": 484, "name": "重庆" },
-      { "value": 300, "name": "深圳" }
+      {
+        "value": 1048,
+        "name": "北京"
+      },
+      {
+        "value": 735,
+        "name": "上海"
+      },
+      {
+        "value": 580,
+        "name": "天津"
+      },
+      {
+        "value": 484,
+        "name": "重庆"
+      },
+      {
+        "value": 300,
+        "name": "深圳"
+      }
     ],
     "msg": "获取城市饼图数据成功"
   },
   "dashboardPieAgeData": {
     "code": 1,
     "data": [
-      { "value": 335, "name": "18-25岁" },
-      { "value": 310, "name": "26-35岁" },
-      { "value": 234, "name": "36-45岁" },
-      { "value": 135, "name": "46-55岁" },
-      { "value": 1548, "name": "56岁及以上" }
+      {
+        "value": 335,
+        "name": "18-25岁"
+      },
+      {
+        "value": 310,
+        "name": "26-35岁"
+      },
+      {
+        "value": 234,
+        "name": "36-45岁"
+      },
+      {
+        "value": 135,
+        "name": "46-55岁"
+      },
+      {
+        "value": 1548,
+        "name": "56岁及以上"
+      }
     ],
     "msg": "获取年龄饼图数据成功"
   },
@@ -63,11 +93,26 @@
     "code": 1,
     "data": {
       "indicator": [
-        { "name": "速度", "max": 100 },
-        { "name": "服务", "max": 100 },
-        { "name": "安全", "max": 100 },
-        { "name": "舒适度", "max": 100 },
-        { "name": "准时率", "max": 100 }
+        {
+          "name": "速度",
+          "max": 100
+        },
+        {
+          "name": "服务",
+          "max": 100
+        },
+        {
+          "name": "安全",
+          "max": 100
+        },
+        {
+          "name": "舒适度",
+          "max": 100
+        },
+        {
+          "name": "准时率",
+          "max": 100
+        }
       ],
       "value": [85, 90, 95, 80, 88]
     },

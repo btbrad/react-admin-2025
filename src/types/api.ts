@@ -45,6 +45,17 @@ export interface UserSearchParams extends PageParams {
   state?: number
 }
 
+export interface CreateUserParams {
+  userName: string
+  userEmail: string
+  mobile?: string
+  deptId: string
+  job?: string
+  state?: number
+  roleList: string[]
+  userImg: string
+}
+
 export interface DashboardReport {
   driverCount: number
   totalMoney: number

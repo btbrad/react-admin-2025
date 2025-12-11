@@ -80,5 +80,22 @@ module.exports = (req, res, next) => {
       msg: '上传成功',
     })
   }
+
+  // 创建用户
+  if (req.method === 'POST' && req.path === '/users/create') {
+    return res.status(200).json({
+      code: 1,
+      data: {
+        id: 1,
+        username: req.body.username,
+        password: req.body.password,
+        avatar: req.body.avatar,
+        phone: req.body.phone,
+        email: req.body.email,
+        createTime: Date.now(),
+      },
+      msg: '创建成功',
+    })
+  }
   next()
 }

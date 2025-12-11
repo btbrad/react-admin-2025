@@ -1,22 +1,50 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Modal, Select, Upload, type GetProp, type UploadProps } from 'antd'
-import { useState } from 'react'
+import { useImperativeHandle, useState } from 'react'
 import storage from '@/utils/storage'
 import { message } from '@/utils/AntdGlobal'
+import type { IAction, IModalProps } from '@/types/modal'
+import type { UserItem } from '@/types/api'
+import { createUserApi } from '@/api/user'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
-const CreateUser: React.FC = () => {
+const CreateUser: React.FC<IModalProps> = props => {
   const [form] = Form.useForm()
-
+  const [visible, setVisible] = useState(false)
+  const [action, setAction] = useState<IAction>('create')
   const [img, setImg] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleOk = async () => {
-    await form.validateFields()
+  useImperativeHandle(props.mRef, () => ({
+    open
+  }))
+
+  const open = (type: IAction, data?: UserItem) => {
+    setAction(type)
+    setVisible(true)
   }
 
-  const handleCancel = () => {}
+  const handleOk = async () => {
+    const valid = await form.validateFields()
+    if (valid) {
+      const params = {
+        ...form.getFieldsValue(),
+        userImg: img
+      }
+      if (action === 'create') {
+        await createUserApi(params)
+        message.success('创建成功!')
+        handleCancel()
+        props.update()
+      }
+    }
+  }
+
+  const handleCancel = () => {
+    setVisible(false)
+    form.resetFields()
+  }
 
   // 上传之前，接口处理
   const beforeUpload = (file: FileType) => {
@@ -59,7 +87,7 @@ const CreateUser: React.FC = () => {
     <Modal
       title='创建用户'
       width={800}
-      open={true}
+      open={visible}
       onOk={handleOk}
       onCancel={handleCancel}
       okText='确认'
