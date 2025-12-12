@@ -97,5 +97,30 @@ module.exports = (req, res, next) => {
       msg: '创建成功',
     })
   }
+
+  // 编辑用户
+  if (req.method === 'POST' && req.path === '/users/edit') {
+    return res.status(200).json({
+      code: 1,
+      data: {
+        id: req.body.id,
+        username: req.body.username,
+        password: req.body.password,
+        avatar: req.body.avatar,
+        phone: req.body.phone,
+        email: req.body.email,
+      },
+      msg: '编辑成功',
+    })
+  }
+
+  // 删除用户
+  if (req.method === 'POST' && req.path === '/users/delete') {
+    return res.status(200).json({
+      code: 1,
+      data: req.body.id,
+      msg: '删除成功',
+    })
+  }
   next()
 }

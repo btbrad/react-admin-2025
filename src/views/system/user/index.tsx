@@ -1,11 +1,12 @@
-import { getUserListApi } from '@/api/user'
+import { deleteUserApi, getUserListApi } from '@/api/user'
 import type { PageParams, UserItem } from '@/types/api'
-import { Button, Form, Input, Select, Space, Table } from 'antd'
+import { Button, Form, Input, Modal, Select, Space, Table } from 'antd'
 import type { TableProps } from 'antd'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import CreateUser from './CreateUser'
 import type { IAction } from '@/types/modal'
+import { message } from '@/utils/AntdGlobal'
 
 const UserList: React.FC = () => {
   const [form] = Form.useForm()
@@ -29,15 +30,15 @@ const UserList: React.FC = () => {
         ...params
       })
       // 假数据
-      const list = new Array(50).fill({}).map(item => {
-        item = { ...res.list[0] }
-        item.userId = Math.floor(Math.random() * 100000)
-        return item
-      })
-      // setData(res.list)
-      setData(list)
-      // setTotal(res.page.total)
-      setTotal(list.length)
+      // const list = new Array(50).fill({}).map(item => {
+      //   item = { ...res.list[0] }
+      //   item.userId = Math.floor(Math.random() * 100000)
+      //   return item
+      // })
+      setData(res.list)
+      // setData(list)
+      setTotal(res.page.total)
+      // setTotal(list.length)
       // setPagination({
       //   current: res.page.pageNum,
       //   pageSize: res.page.pageSize
@@ -60,8 +61,33 @@ const UserList: React.FC = () => {
     getUserList({ pageNum: 1, pageSize: pagination.pageSize })
   }
 
+  // 创建用户
   const handleCreate = () => {
     userRef.current?.open('create')
+  }
+
+  // 编辑用户
+  const handleEdit = (record: UserItem) => {
+    userRef.current?.open('edit', record)
+  }
+
+  const handleDeleteUser = async (ids: number[]) => {
+    await deleteUserApi({ userIds: ids })
+    message.success('删除成功')
+    getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+  }
+
+  // 删除用户
+  const handleDelete = (id: number) => {
+    Modal.confirm({
+      title: '提示',
+      content: '确定要删除该用户吗？',
+      cancelText: '取消',
+      okText: '确定',
+      onOk: () => {
+        handleDeleteUser([id])
+      }
+    })
   }
 
   const columns: TableProps<UserItem>['columns'] = [
@@ -116,11 +142,13 @@ const UserList: React.FC = () => {
     {
       title: '操作',
       key: 'operation',
-      render() {
+      render(_, record: UserItem) {
         return (
           <Space>
-            <Button type='text'>编辑</Button>
-            <Button type='text' danger>
+            <Button variant='text' color='cyan' onClick={() => handleEdit(record)}>
+              编辑
+            </Button>
+            <Button type='text' danger onClick={() => handleDelete(record.userId)}>
               删除
             </Button>
           </Space>

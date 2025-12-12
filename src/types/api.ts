@@ -56,6 +56,10 @@ export interface CreateUserParams {
   userImg: string
 }
 
+export interface EditUserParams extends CreateUserParams {
+  userId: number
+}
+
 export interface DashboardReport {
   driverCount: number
   totalMoney: number

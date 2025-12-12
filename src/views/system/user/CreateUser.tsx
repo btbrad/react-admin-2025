@@ -5,7 +5,7 @@ import storage from '@/utils/storage'
 import { message } from '@/utils/AntdGlobal'
 import type { IAction, IModalProps } from '@/types/modal'
 import type { UserItem } from '@/types/api'
-import { createUserApi } from '@/api/user'
+import { createUserApi, editUserApi } from '@/api/user'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
@@ -23,6 +23,10 @@ const CreateUser: React.FC<IModalProps> = props => {
   const open = (type: IAction, data?: UserItem) => {
     setAction(type)
     setVisible(true)
+    if (type === 'edit' && data) {
+      form.setFieldsValue(data)
+      setImg(data.userImg || '')
+    }
   }
 
   const handleOk = async () => {
@@ -35,6 +39,12 @@ const CreateUser: React.FC<IModalProps> = props => {
       if (action === 'create') {
         await createUserApi(params)
         message.success('创建成功!')
+        handleCancel()
+        props.update()
+      } else if (action === 'edit') {
+        // 编辑用户接口待补充
+        await editUserApi(params)
+        message.success('编辑成功!')
         handleCancel()
         props.update()
       }
@@ -94,6 +104,10 @@ const CreateUser: React.FC<IModalProps> = props => {
       cancelText='取消'
     >
       <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} labelAlign='right'>
+        <Form.Item name='userId' hidden>
+          <Input />
+        </Form.Item>
+
         <Form.Item label='用户名称' name='userName' rules={[{ required: true, message: '请输入用户名称' }]}>
           <Input placeholder='请输入用户名称' />
         </Form.Item>
