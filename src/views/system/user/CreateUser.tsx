@@ -109,15 +109,45 @@ const CreateUser: React.FC<IModalProps> = props => {
           <Input />
         </Form.Item>
 
-        <Form.Item label='用户名称' name='userName' rules={[{ required: true, message: '请输入用户名称' }]}>
+        <Form.Item
+          label='用户名称'
+          name='userName'
+          rules={[
+            { required: true, message: '请输入用户名称' },
+            {
+              min: 5,
+              max: 12,
+              message: '用户名称长度在 5 到 12 个字符'
+            }
+          ]}
+        >
           <Input placeholder='请输入用户名称' />
         </Form.Item>
 
-        <Form.Item label='用户邮箱' name='userEmail' rules={[{ required: true, message: '请输入用户邮箱' }]}>
+        <Form.Item
+          label='用户邮箱'
+          name='userEmail'
+          rules={[
+            { required: true, message: '请输入用户邮箱' },
+            {
+              type: 'email',
+              message: '请输入正确的邮箱格式'
+            }
+          ]}
+        >
           <Input placeholder='请输入用户邮箱' disabled={action === 'edit'} />
         </Form.Item>
 
-        <Form.Item label='手机号' name='mobile'>
+        <Form.Item
+          label='手机号'
+          name='mobile'
+          rules={[
+            {
+              pattern: /1[1-9]\d{9}/,
+              message: '手机号格式不合法'
+            }
+          ]}
+        >
           <Input type='number' placeholder='请输入手机号' />
         </Form.Item>
 
