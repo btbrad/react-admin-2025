@@ -15,7 +15,7 @@ export interface ResultData<T = unknown> {
 
 export interface PageParams {
   pageNum: number
-  pageSize: number
+  pageSize?: number
 }
 
 export interface LoginParams {

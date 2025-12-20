@@ -53,6 +53,7 @@ const CreateUser: React.FC<IModalProps> = props => {
 
   const handleCancel = () => {
     setVisible(false)
+    setImg('')
     form.resetFields()
   }
 
@@ -113,7 +114,7 @@ const CreateUser: React.FC<IModalProps> = props => {
         </Form.Item>
 
         <Form.Item label='用户邮箱' name='userEmail' rules={[{ required: true, message: '请输入用户邮箱' }]}>
-          <Input placeholder='请输入用户邮箱' />
+          <Input placeholder='请输入用户邮箱' disabled={action === 'edit'} />
         </Form.Item>
 
         <Form.Item label='手机号' name='mobile'>

@@ -29,7 +29,8 @@ const UserList: React.FC = () => {
       const values = form.getFieldsValue()
       const res = await getUserListApi({
         ...values,
-        ...params
+        ...params,
+        pageSize: params.pageSize || pagination.pageSize
       })
       // 假数据
       // const list = new Array(50).fill({}).map(item => {
