@@ -18,6 +18,8 @@ const UserList: React.FC = () => {
     pageSize: 10
   })
 
+  const [userIds, setUserIds] = useState<number[]>([])
+
   const userRef = useRef<{
     open: (type: IAction, data?: UserItem) => void
   }>(undefined)
@@ -74,6 +76,7 @@ const UserList: React.FC = () => {
   const handleDeleteUser = async (ids: number[]) => {
     await deleteUserApi({ userIds: ids })
     message.success('删除成功')
+    setUserIds([])
     getUserList({ pageNum: 1, pageSize: pagination.pageSize })
   }
 
@@ -86,6 +89,28 @@ const UserList: React.FC = () => {
       okText: '确定',
       onOk: () => {
         handleDeleteUser([id])
+      }
+    })
+  }
+
+  const onSelectChange = (selectedRowKeys: React.Key[]) => {
+    console.log(111, selectedRowKeys)
+    setUserIds(selectedRowKeys.map(item => Number(item)))
+  }
+
+  // 批量删除
+  const handleBatchDelete = () => {
+    if (!userIds.length) {
+      message.warning('请选择要删除的用户')
+      return
+    }
+    Modal.confirm({
+      title: '提示',
+      content: '确定要删除选中的用户吗？',
+      cancelText: '取消',
+      okText: '确定',
+      onOk: () => {
+        handleDeleteUser(userIds)
       }
     })
   }
@@ -195,7 +220,7 @@ const UserList: React.FC = () => {
             <Button type='primary' onClick={handleCreate}>
               新增
             </Button>
-            <Button type='primary' danger>
+            <Button type='primary' danger onClick={handleBatchDelete}>
               批量删除
             </Button>
           </div>
@@ -205,7 +230,7 @@ const UserList: React.FC = () => {
           dataSource={data}
           columns={columns}
           bordered
-          rowSelection={{ type: 'checkbox' }}
+          rowSelection={{ type: 'checkbox', onChange: onSelectChange, selectedRowKeys: userIds }}
           pagination={{
             current: pagination.current,
             showSizeChanger: true,
