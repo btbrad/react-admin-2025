@@ -1,22 +1,16 @@
 import { deleteUserApi, getUserListApi } from '@/api/user'
-import type { PageParams, UserItem } from '@/types/api'
+import type { UserItem, UserSearchParams } from '@/types/api'
 import { Button, Form, Input, Modal, Select, Space, Table } from 'antd'
 import type { TableProps } from 'antd'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import CreateUser from './CreateUser'
 import type { IAction } from '@/types/modal'
 import { message } from '@/utils/AntdGlobal'
+import { useAntdTable } from 'ahooks'
 
 const UserList: React.FC = () => {
   const [form] = Form.useForm()
-
-  const [data, setData] = useState<UserItem[]>([])
-  const [total, setTotal] = useState<number>(0)
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10
-  })
 
   const [userIds, setUserIds] = useState<number[]>([])
 
@@ -24,44 +18,12 @@ const UserList: React.FC = () => {
     open: (type: IAction, data?: UserItem) => void
   }>(undefined)
 
-  const getUserList = useCallback(
-    async (params: PageParams) => {
-      const values = form.getFieldsValue()
-      const res = await getUserListApi({
-        ...values,
-        ...params,
-        pageSize: params.pageSize || pagination.pageSize
-      })
-      // 假数据
-      // const list = new Array(50).fill({}).map(item => {
-      //   item = { ...res.list[0] }
-      //   item.userId = Math.floor(Math.random() * 100000)
-      //   return item
-      // })
-      setData(res.list)
-      // setData(list)
-      setTotal(res.page.total)
-      // setTotal(list.length)
-      // setPagination({
-      //   current: res.page.pageNum,
-      //   pageSize: res.page.pageSize
-      // })
-    },
-    [form]
-  )
-
-  useEffect(() => {
-    getUserList({ pageNum: pagination.current, pageSize: pagination.pageSize })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagination.pageSize, getUserList, pagination.current])
-
   const handleSearch = () => {
-    getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+    search.submit()
   }
 
   const handleRest = () => {
-    form.resetFields()
-    getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+    search.reset()
   }
 
   // 创建用户
@@ -78,7 +40,7 @@ const UserList: React.FC = () => {
     await deleteUserApi({ userIds: ids })
     message.success('删除成功')
     setUserIds([])
-    getUserList({ pageNum: 1, pageSize: pagination.pageSize })
+    search.reset()
   }
 
   // 删除用户
@@ -115,6 +77,28 @@ const UserList: React.FC = () => {
       }
     })
   }
+
+  /**
+   * 使用ahooks
+   */
+
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: UserSearchParams) => {
+    return getUserListApi({
+      ...formData,
+      pageNum: current,
+      pageSize
+    }).then(data => {
+      return {
+        list: data.list,
+        total: data.page.total
+      }
+    })
+  }
+
+  const { tableProps, search } = useAntdTable(getTableData, {
+    form,
+    defaultPageSize: 10
+  })
 
   const columns: TableProps<UserItem>['columns'] = [
     {
@@ -228,24 +212,13 @@ const UserList: React.FC = () => {
         </div>
         <Table
           rowKey='userId'
-          dataSource={data}
           columns={columns}
           bordered
           rowSelection={{ type: 'checkbox', onChange: onSelectChange, selectedRowKeys: userIds }}
-          pagination={{
-            current: pagination.current,
-            showSizeChanger: true,
-            pageSize: pagination.pageSize,
-            total,
-            showQuickJumper: true,
-            showTotal: total => `共 ${total} 条`,
-            onChange(page, pageSize) {
-              setPagination({ current: page, pageSize })
-            }
-          }}
+          {...tableProps}
         />
       </div>
-      <CreateUser mRef={userRef} update={() => getUserList({ pageNum: 1, pageSize: pagination.pageSize })} />
+      <CreateUser mRef={userRef} update={() => search.submit()} />
     </div>
   )
 }
