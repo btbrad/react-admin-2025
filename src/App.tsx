@@ -3,6 +3,11 @@ import router from './router/index.tsx'
 import { ConfigProvider, App as AntdApp } from 'antd'
 import AntdGlobal from './utils/AntdGlobal.ts'
 
+import zhCN from 'antd/locale/zh_CN'
+
+// for date-picker i18n
+import 'dayjs/locale/zh-cn'
+
 import './App.less'
 
 function App() {
@@ -13,6 +18,7 @@ function App() {
           colorPrimary: '#ed6c00'
         }
       }}
+      locale={zhCN}
     >
       <AntdApp>
         <AntdGlobal />
