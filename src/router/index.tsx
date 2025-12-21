@@ -6,6 +6,7 @@ import NotFount from '@/views/404.tsx'
 import Layout from '@/layout/index'
 import Dashboard from '@/views/dashboard'
 import User from '@/views/system/user'
+import Dept from '@/views/system/dept'
 
 const routes = [
   {
@@ -30,6 +31,10 @@ const routes = [
       {
         path: '/userList',
         element: <User />
+      },
+      {
+        path: '/deptList',
+        element: <Dept />
       }
     ]
   },

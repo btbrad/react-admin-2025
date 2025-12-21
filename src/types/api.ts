@@ -82,3 +82,21 @@ export interface DashboardRadarData {
   indicator: { name: string; max: number }[]
   value: number[]
 }
+
+export interface DeptParams {
+  deptName?: string
+}
+
+export interface CreateDeptParams {
+  parentId?: string
+  deptName: number
+  userName: string
+}
+
+export interface DeptItem extends CreateDeptParams {
+  _id: string
+  userId: number
+  createTime: string
+  updateTime: string
+  children?: DeptItem[]
+}

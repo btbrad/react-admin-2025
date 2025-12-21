@@ -20,6 +20,11 @@ const SideMenu: React.FC = () => {
           key: '3',
           label: '用户管理',
           icon: <TeamOutlined />
+        },
+        {
+          key: '4',
+          label: '部门管理',
+          icon: <TeamOutlined />
         }
       ]
     }

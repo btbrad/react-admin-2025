@@ -1,5 +1,13 @@
 import request from '@/utils/request'
-import type { CreateUserParams, EditUserParams, ResultData, UserItem, UserSearchParams } from '@/types/api'
+import type {
+  CreateUserParams,
+  DeptItem,
+  DeptParams,
+  EditUserParams,
+  ResultData,
+  UserItem,
+  UserSearchParams
+} from '@/types/api'
 
 // 获取用户信息
 export const getUserInfoApi = () => request.get<UserItem>('/user/getUserInfo')
@@ -15,3 +23,6 @@ export const editUserApi = (data: EditUserParams) => request.post('/users/edit',
 
 // 删除用户
 export const deleteUserApi = (data: { userIds: number[] }) => request.post('/users/delete', data)
+
+// 部门列表
+export const getDeptListApi = (data: DeptParams) => request.post<DeptItem[]>('/dept/list', data)

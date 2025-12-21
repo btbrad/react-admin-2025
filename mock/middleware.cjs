@@ -122,5 +122,40 @@ module.exports = (req, res, next) => {
       msg: '删除成功',
     })
   }
+
+  if (req.method === 'POST' && req.path === '/dept/list') {
+    return res.status(200).json({
+      code: 1,
+      data: [
+        {
+          _id: '1',
+          userName: '张三',
+          deptName: '研发部',
+          parentId: '',
+          createTime: Date.now(),
+          updateTime: Date.now(),
+          children: [
+            {
+              _id: '2',
+              userName: '李四',
+              deptName: '前端组',
+              parentId: '1',
+              createTime: Date.now(),
+              updateTime: Date.now(),
+            },
+            {
+              _id: '3',
+              userName: '2王五',
+              deptName: '后端组',
+              parentId: '1',
+              createTime: Date.now(),
+              updateTime: Date.now(),
+            }
+          ]
+        }
+      ],
+      msg: '删除成功',
+    })
+  }
   next()
 }
