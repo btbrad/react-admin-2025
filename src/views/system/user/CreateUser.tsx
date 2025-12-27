@@ -9,7 +9,7 @@ import { createUserApi, editUserApi } from '@/api/user'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
-const CreateUser: React.FC<IModalProps> = props => {
+const CreateUser: React.FC<IModalProps<UserItem>> = props => {
   const [form] = Form.useForm()
   const [visible, setVisible] = useState(false)
   const [action, setAction] = useState<IAction>('create')

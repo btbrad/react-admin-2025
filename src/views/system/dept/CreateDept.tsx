@@ -1,27 +1,39 @@
-import type { DeptItem } from '@/types/api'
-import type { IAction } from '@/types/modal'
+import type { DeptItem, EditDeptParams } from '@/types/api'
+import type { IAction, IModalProps } from '@/types/modal'
 import { Form, Input, Modal, Select, TreeSelect } from 'antd'
 import { useForm } from 'antd/es/form/Form'
-import { useState } from 'react'
+import { useImperativeHandle, useState } from 'react'
 
-const CreateDept: React.FC = () => {
+const CreateDept: React.FC<IModalProps<EditDeptParams | { parentId: string }>> = props => {
   const [form] = useForm()
+  const [visible, setVisible] = useState(false)
   const [action, setAction] = useState<IAction>('create')
   const [deptList, setDeptList] = useState<DeptItem[]>([])
 
+  useImperativeHandle(props.mRef, () => ({ open }))
+
+  const open = (type: IAction, data?: EditDeptParams | { parentId: string }) => {
+    setAction(type)
+    if (type === 'edit' && data) {
+      form.setFieldsValue(data)
+    }
+    setVisible(true)
+  }
   const handleSubmit = () => {
     console.log('提交')
   }
 
   const handleCancel = () => {
     console.log('取消')
+    setVisible(false)
+    form.resetFields()
   }
 
   return (
     <Modal
       title={action === 'create' ? '创建部门' : '编辑部门'}
       width={800}
-      open={true}
+      open={visible}
       okText='确认'
       cancelText='取消'
       onOk={handleSubmit}

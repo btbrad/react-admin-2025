@@ -1,9 +1,8 @@
 import type { MutableRefObject } from 'react'
-import type { UserItem } from './api'
 
 export type IAction = 'create' | 'edit' | 'delete'
 
-export interface IModalProps {
-  mRef: MutableRefObject<{ open: (type: IAction, data?: UserItem) => void } | undefined>
+export interface IModalProps<T> {
+  mRef: MutableRefObject<{ open: (type: IAction, data?: T) => void } | undefined>
   update: () => void
 }

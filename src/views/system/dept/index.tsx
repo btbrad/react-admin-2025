@@ -1,15 +1,20 @@
 import { getDeptListApi } from '@/api/user'
-import type { DeptItem } from '@/types/api'
+import type { DeptItem, EditDeptParams } from '@/types/api'
 import { Button, Form, Input, Space, Table, type TableProps } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import dayjs from 'dayjs'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CreateDept from './CreateDept'
+import type { IAction } from '@/types/modal'
 
 const DeptList: React.FC = () => {
   const [form] = useForm()
 
   const [data, setData] = useState<DeptItem[]>([])
+
+  const deptRef = useRef<{
+    open: (type: IAction, data?: EditDeptParams | { parentId: string }) => void
+  }>(undefined)
 
   const getDeptList = useCallback(async () => {
     const res = await getDeptListApi(form.getFieldsValue())
@@ -24,6 +29,13 @@ const DeptList: React.FC = () => {
     form.resetFields()
     getDeptList()
   }
+
+  const handleEdit = useCallback(
+    (record?: EditDeptParams) => {
+      deptRef.current?.open('edit', record)
+    },
+    [deptRef]
+  )
 
   const columns: TableProps<DeptItem>['columns'] = [
     {
@@ -57,11 +69,11 @@ const DeptList: React.FC = () => {
     {
       title: '操作',
       key: 'action',
-      render() {
+      render(_, record: DeptItem) {
         return (
           <Space>
             <Button type='text'>新增</Button>
-            <Button variant='text' color='cyan'>
+            <Button variant='text' color='cyan' onClick={() => handleEdit(record)}>
               编辑
             </Button>
             <Button type='text' danger>
@@ -72,6 +84,10 @@ const DeptList: React.FC = () => {
       }
     }
   ]
+
+  const handleCreate = () => {
+    deptRef.current?.open('create')
+  }
 
   return (
     <div className='dept-list'>
@@ -92,12 +108,14 @@ const DeptList: React.FC = () => {
         <div className='headerWrapper'>
           <div className='title'>部门列表</div>
           <div className='action'>
-            <Button type='primary'>新增</Button>
+            <Button type='primary' onClick={handleCreate}>
+              新增
+            </Button>
           </div>
         </div>
         <Table columns={columns} dataSource={data} pagination={false} bordered rowKey='_id' />
       </div>
-      <CreateDept />
+      <CreateDept mRef={deptRef} update={getDeptList} />
     </div>
   )
 }
