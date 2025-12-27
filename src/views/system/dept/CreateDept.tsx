@@ -17,6 +17,7 @@ const CreateDept: React.FC<IModalProps<EditDeptParams | { parentId: string }>> =
 
   const open = (type: IAction, data?: EditDeptParams | { parentId: string }) => {
     setAction(type)
+    getDeptList()
     if (data) {
       form.setFieldsValue(data)
     }
@@ -57,7 +58,6 @@ const CreateDept: React.FC<IModalProps<EditDeptParams | { parentId: string }>> =
   }
 
   useEffect(() => {
-    getDeptList()
     getAllUserList()
   }, [])
 

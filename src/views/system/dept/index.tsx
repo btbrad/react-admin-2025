@@ -1,11 +1,12 @@
-import { getDeptListApi } from '@/api/user'
+import { deleteDeptApi, getDeptListApi } from '@/api/user'
 import type { DeptItem, EditDeptParams } from '@/types/api'
-import { Button, Form, Input, Space, Table, type TableProps } from 'antd'
+import { Button, Form, Input, Modal, Space, Table, type TableProps } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CreateDept from './CreateDept'
 import type { IAction } from '@/types/modal'
+import { message } from '@/utils/AntdGlobal'
 
 const DeptList: React.FC = () => {
   const [form] = useForm()
@@ -42,6 +43,25 @@ const DeptList: React.FC = () => {
       deptRef.current?.open('create', { parentId })
     },
     [deptRef]
+  )
+
+  const handleDelete = useCallback(
+    async (id: string) => {
+      Modal.confirm({
+        title: '提示',
+        content: '确定要删除选中的部门吗？',
+        cancelText: '取消',
+        okText: '确定',
+        onOk: async () => {
+          await deleteDeptApi({
+            _id: id
+          })
+          message.success('删除成功!')
+          getDeptList()
+        }
+      })
+    },
+    [getDeptList]
   )
 
   const columns: TableProps<DeptItem>['columns'] = [
@@ -85,7 +105,7 @@ const DeptList: React.FC = () => {
             <Button variant='text' color='cyan' onClick={() => handleEdit(record)}>
               编辑
             </Button>
-            <Button type='text' danger>
+            <Button type='text' danger onClick={() => handleDelete(record._id)}>
               删除
             </Button>
           </Space>
