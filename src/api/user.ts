@@ -40,4 +40,4 @@ export const editDeptApi = (data: EditDeptParams) => request.post('/dept/edit', 
 export const deleteDeptApi = (data: DeleteDeptParams) => request.post('/dept/delete', data)
 
 // 所有用户列表
-export const getAllUserListApi = () => request.get<ResultData<UserItem>>('/users/all/list')
+export const getAllUserListApi = () => request.get<UserItem[]>('/users/all/list')

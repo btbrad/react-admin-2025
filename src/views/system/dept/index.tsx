@@ -37,6 +37,13 @@ const DeptList: React.FC = () => {
     [deptRef]
   )
 
+  const handleAddSub = useCallback(
+    (parentId: string) => {
+      deptRef.current?.open('create', { parentId })
+    },
+    [deptRef]
+  )
+
   const columns: TableProps<DeptItem>['columns'] = [
     {
       title: '名称',
@@ -72,7 +79,9 @@ const DeptList: React.FC = () => {
       render(_, record: DeptItem) {
         return (
           <Space>
-            <Button type='text'>新增</Button>
+            <Button type='text' onClick={() => handleAddSub(record._id)}>
+              新增
+            </Button>
             <Button variant='text' color='cyan' onClick={() => handleEdit(record)}>
               编辑
             </Button>

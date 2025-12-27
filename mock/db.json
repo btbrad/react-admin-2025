@@ -161,6 +161,42 @@
     },
     "msg": "获取用户列表成功"
   },
+  "userAllList": {
+    "code": 1,
+    "data": [
+      {
+        "createId": 1,
+        "deptId": "1",
+        "deptName": "开发部",
+        "role": 1,
+        "roleList": "1",
+        "state": 1,
+        "userEmail": "zhangsan@example.com",
+        "userId": 1,
+        "userImg": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        "userName": "张三",
+        "_id": "1",
+        "mobile": "13800000000",
+        "job": "前端开发"
+      },
+      {
+        "createId": 1,
+        "deptId": "1",
+        "deptName": "开发部",
+        "role": 1,
+        "roleList": "1",
+        "state": 1,
+        "userEmail": "zhangsan@example.com",
+        "userId": 2,
+        "userImg": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        "userName": "李四",
+        "_id": "2",
+        "mobile": "13800000000",
+        "job": "前端开发"
+      }
+    ],
+    "msg": "获取全部用户列表成功"
+  },
   "posts": [
     {
       "id": 1,

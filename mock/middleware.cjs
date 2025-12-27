@@ -157,5 +157,33 @@ module.exports = (req, res, next) => {
       msg: '删除成功',
     })
   }
+
+  if (req.method === 'POST' && req.path === '/dept/create') {
+    return res.status(200).json({
+      code: 1,
+      msg: '创建成功',
+    })
+  }
+
+  if (req.method === 'POST' && req.path === '/dept/edit') {
+    return res.status(200).json({
+      code: 1,
+      msg: '编辑成功',
+    })
+  }
+
+  if (req.method === 'POST' && req.path === '/dept/edit') {
+    return res.status(200).json({
+      code: 1,
+      msg: '编辑成功',
+    })
+  }
+
+  if (req.method === 'POST' && req.path === '/dept/delete') {
+    return res.status(200).json({
+      code: 1,
+      msg: '删除成功',
+    })
+  }
   next()
 }
