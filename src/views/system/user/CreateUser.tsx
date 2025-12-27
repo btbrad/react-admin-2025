@@ -96,7 +96,7 @@ const CreateUser: React.FC<IModalProps> = props => {
 
   return (
     <Modal
-      title='创建用户'
+      title={action === 'create' ? '创建用户' : '编辑用户'}
       width={800}
       open={visible}
       onOk={handleOk}

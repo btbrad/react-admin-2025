@@ -4,6 +4,7 @@ import { Button, Form, Input, Space, Table, type TableProps } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useState } from 'react'
+import CreateDept from './CreateDept'
 
 const DeptList: React.FC = () => {
   const [form] = useForm()
@@ -96,6 +97,7 @@ const DeptList: React.FC = () => {
         </div>
         <Table columns={columns} dataSource={data} pagination={false} bordered rowKey='_id' />
       </div>
+      <CreateDept />
     </div>
   )
 }

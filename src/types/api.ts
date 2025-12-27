@@ -100,3 +100,17 @@ export interface DeptItem extends CreateDeptParams {
   updateTime: string
   children?: DeptItem[]
 }
+
+export interface CreateDeptParams {
+  parentId?: string
+  deptName: number
+  userName: string
+}
+
+export interface EditDeptParams extends CreateDeptParams {
+  _id: string
+}
+
+export interface DeleteDeptParams {
+  _id: string
+}

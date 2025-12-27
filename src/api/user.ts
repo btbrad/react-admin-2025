@@ -6,7 +6,10 @@ import type {
   EditUserParams,
   ResultData,
   UserItem,
-  UserSearchParams
+  UserSearchParams,
+  CreateDeptParams,
+  EditDeptParams,
+  DeleteDeptParams
 } from '@/types/api'
 
 // 获取用户信息
@@ -26,3 +29,15 @@ export const deleteUserApi = (data: { userIds: number[] }) => request.post('/use
 
 // 部门列表
 export const getDeptListApi = (data: DeptParams) => request.post<DeptItem[]>('/dept/list', data)
+
+// 创建部门
+export const createDeptApi = (data: CreateDeptParams) => request.post('/dept/create', data)
+
+// 编辑部门
+export const editDeptApi = (data: EditDeptParams) => request.post('/dept/edit', data)
+
+// 删除部门
+export const deleteDeptApi = (data: DeleteDeptParams) => request.post('/dept/delete', data)
+
+// 所有用户列表
+export const getAllUserListApi = () => request.get<ResultData<UserItem>>('/users/all/list')
