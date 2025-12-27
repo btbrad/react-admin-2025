@@ -114,3 +114,45 @@ export interface EditDeptParams extends CreateDeptParams {
 export interface DeleteDeptParams {
   _id: string
 }
+
+export interface MenuQueryParams {
+  menuName?: string
+  menuState?: number
+}
+
+export interface CreateMenuParams {
+  menuName: string
+  icon?: string
+  menuType: number
+  menuState: number
+  menuCode?: string
+  parentId?: string
+  path?: string
+  component?: string
+}
+
+export interface MenuItem extends CreateMenuParams {
+  _id: string
+  createTime: string
+  buttons?: MenuItem[]
+  children?: MenuItem[]
+}
+
+export interface CreateMenuParams {
+  menuName: string
+  icon?: string
+  menuType: number
+  menuState: number
+  menuCode?: string
+  parentId?: string
+  path?: string
+  component?: string
+}
+
+export interface EditMenuParams extends CreateMenuParams {
+  _id: string
+}
+
+export interface DeleteMenuParams {
+  _id: string
+}

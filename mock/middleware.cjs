@@ -185,5 +185,29 @@ module.exports = (req, res, next) => {
       msg: '删除成功',
     })
   }
+
+  // 菜单列表
+  if (req.method === 'GET' && req.path === '/menu/list') {
+    return res.status(200).json({
+      code: 1,
+      data: [
+        {
+          id: 1,
+          name: "Dashboard",
+          icon: "dashboard",
+          path: "/dashboard",
+          children: [
+            {
+              id: 2,
+              name: "分析页",
+              icon: "bar-chart",
+              path: "/dashboard/analysis"
+            }
+          ]
+        }
+      ],
+      msg: "获取菜单成功"
+    })
+  }
   next()
 }

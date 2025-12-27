@@ -7,6 +7,7 @@ import Layout from '@/layout/index'
 import Dashboard from '@/views/dashboard'
 import User from '@/views/system/user'
 import Dept from '@/views/system/dept'
+import MenuList from '@/views/system/menu/index'
 
 const routes = [
   {
@@ -35,6 +36,10 @@ const routes = [
       {
         path: '/deptList',
         element: <Dept />
+      },
+      {
+        path: '/menuList',
+        element: <MenuList />
       }
     ]
   },
