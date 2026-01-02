@@ -9,19 +9,7 @@ module.exports = [
           menuCode: 'dashboard',
           parentId: 0,
           component: "Dashboard",
-          children: [
-            {
-              _id: 2,
-              menuName: "分析页",
-              icon: "bar-chart",
-              path: "/dashboard/analysis",
-              menuType: 1,
-              menuState: 1,
-              menuCode: 'dashboard',
-              parentId: 1,
-              component: "Dashboard",
-            }
-          ]
+          buttons: []
         },
         {
           _id: 3,
@@ -44,7 +32,8 @@ module.exports = [
               menuCode: '',
               parentId: 3,
               component: "User",
-              orderBy: 1
+              orderBy: 1,
+              buttons: []
             },
             {
               _id: 6,
@@ -56,7 +45,8 @@ module.exports = [
               menuCode: '',
               parentId: 3,
               component: "Menu",
-              orderBy: 2
+              orderBy: 2,
+              buttons: []
             },
             {
               _id: 7,
@@ -68,7 +58,8 @@ module.exports = [
               menuCode: '',
               parentId: 3,
               component: "Role",
-              orderBy: 2
+              orderBy: 2,
+              buttons: []
             },
             {
               _id: 8,
@@ -80,7 +71,8 @@ module.exports = [
               menuCode: '',
               parentId: 3,
               component: "Dept",
-              orderBy: 2
+              orderBy: 2,
+              buttons: []
             },
           ]
         },
