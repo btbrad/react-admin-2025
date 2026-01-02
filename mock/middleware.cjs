@@ -172,12 +172,6 @@ module.exports = (req, res, next) => {
     })
   }
 
-  if (req.method === 'POST' && req.path === '/dept/edit') {
-    return res.status(200).json({
-      code: 1,
-      msg: '编辑成功',
-    })
-  }
 
   if (req.method === 'POST' && req.path === '/dept/delete') {
     return res.status(200).json({
@@ -192,21 +186,53 @@ module.exports = (req, res, next) => {
       code: 1,
       data: [
         {
-          id: 1,
-          name: "Dashboard",
+          _id: 1,
+          menuName: "Dashboard",
           icon: "dashboard",
           path: "/dashboard",
+          menuType: 1,
+          menuState: 1,
+          menuCode: 'dashboard',
+          parentId: 0,
+          component: "Dashboard",
           children: [
             {
-              id: 2,
-              name: "分析页",
+              _id: 2,
+              menuName: "分析页",
               icon: "bar-chart",
-              path: "/dashboard/analysis"
+              path: "/dashboard/analysis",
+              menuType: 1,
+              menuState: 1,
+              menuCode: 'dashboard',
+              parentId: 1,
+              component: "Dashboard",
             }
           ]
         }
       ],
       msg: "获取菜单成功"
+    })
+  }
+
+  if (req.method === 'POST' && req.path === '/menu/create') {
+    return res.status(200).json({
+      code: 1,
+      msg: '创建成功',
+    })
+  }
+
+  if (req.method === 'POST' && req.path === '/menu/edit') {
+    return res.status(200).json({
+      code: 1,
+      msg: '编辑成功',
+    })
+  }
+
+
+  if (req.method === 'POST' && req.path === '/menu/delete') {
+    return res.status(200).json({
+      code: 1,
+      msg: '删除成功',
     })
   }
   next()

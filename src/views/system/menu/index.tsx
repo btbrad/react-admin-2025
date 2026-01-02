@@ -1,5 +1,5 @@
 import { getMenuListApi } from '@/api/menu'
-import type { MenuItem } from '@/types/api'
+import type { EditMenuParams, MenuItem } from '@/types/api'
 import { Button, Form, Input, Select, Space, Table, type TableProps } from 'antd'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -26,7 +26,7 @@ const MenuList: React.FC = () => {
   }
 
   const menuRef = useRef<{
-    open: (type: IAction, data?: MenuItem) => void
+    open: (type: IAction, data?: EditMenuParams | { parentId: string }) => void
   }>(undefined)
 
   const columns: TableProps<MenuItem>['columns'] = [
@@ -88,11 +88,13 @@ const MenuList: React.FC = () => {
       render() {
         return (
           <Space>
-            <Button type='text'>新增</Button>
-            <Button variant='text' color='cyan'>
+            <Button color='primary' variant='link'>
+              新增
+            </Button>
+            <Button variant='link' color='cyan'>
               编辑
             </Button>
-            <Button type='text' danger>
+            <Button type='link' danger>
               删除
             </Button>
           </Space>
