@@ -2,7 +2,9 @@ import { getMenuListApi } from '@/api/menu'
 import type { MenuItem } from '@/types/api'
 import { Button, Form, Input, Select, Space, Table, type TableProps } from 'antd'
 import dayjs from 'dayjs'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import CreateMenu from './CreateMenu'
+import type { IAction } from '@/types/modal'
 
 const MenuList: React.FC = () => {
   const [form] = Form.useForm()
@@ -22,6 +24,10 @@ const MenuList: React.FC = () => {
     form.resetFields()
     getMenuList()
   }
+
+  const menuRef = useRef<{
+    open: (type: IAction, data?: MenuItem) => void
+  }>(undefined)
 
   const columns: TableProps<MenuItem>['columns'] = [
     {
@@ -96,7 +102,7 @@ const MenuList: React.FC = () => {
   ]
 
   const handleCreate = () => {
-    console.log('handleCreate')
+    menuRef.current?.open('create')
   }
 
   return (
@@ -136,6 +142,7 @@ const MenuList: React.FC = () => {
         </div>
         <Table columns={columns} dataSource={data} pagination={false} bordered rowKey='_id' />
       </div>
+      <CreateMenu mRef={menuRef} update={getMenuList} />
     </div>
   )
 }
