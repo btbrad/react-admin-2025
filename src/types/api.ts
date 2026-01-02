@@ -157,3 +157,8 @@ export interface EditMenuParams extends CreateMenuParams {
 export interface DeleteMenuParams {
   _id: string
 }
+
+export interface PermissionReturnValue {
+  buttonList: string[]
+  menuList: MenuItem[]
+}

@@ -8,6 +8,7 @@ import Dashboard from '@/views/dashboard'
 import User from '@/views/system/user'
 import Dept from '@/views/system/dept'
 import MenuList from '@/views/system/menu/index'
+import AuthLoader from './AuthLoader'
 
 const routes = [
   {
@@ -19,7 +20,9 @@ const routes = [
     element: <Login />
   },
   {
+    id: 'layout',
     element: <Layout />,
+    loader: AuthLoader,
     children: [
       {
         path: '/welcome',

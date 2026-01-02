@@ -9,7 +9,8 @@ import type {
   UserSearchParams,
   CreateDeptParams,
   EditDeptParams,
-  DeleteDeptParams
+  DeleteDeptParams,
+  PermissionReturnValue
 } from '@/types/api'
 
 // 获取用户信息
@@ -41,3 +42,6 @@ export const deleteDeptApi = (data: DeleteDeptParams) => request.post('/dept/del
 
 // 所有用户列表
 export const getAllUserListApi = () => request.get<UserItem[]>('/users/all/list')
+
+// 权限列表
+export const getPermissionListApi = () => request.get<PermissionReturnValue>('/user/permissionList')
