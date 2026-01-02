@@ -129,6 +129,7 @@ export interface CreateMenuParams {
   parentId?: string
   path?: string
   component?: string
+  orderBy: number
 }
 
 export interface MenuItem extends CreateMenuParams {

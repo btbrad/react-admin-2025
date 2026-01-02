@@ -1,10 +1,11 @@
-import { getMenuListApi } from '@/api/menu'
+import { deleteMenuApi, getMenuListApi } from '@/api/menu'
 import type { EditMenuParams, MenuItem } from '@/types/api'
-import { Button, Form, Input, Select, Space, Table, type TableProps } from 'antd'
+import { Button, Form, Input, Modal, Select, Space, Table, type TableProps } from 'antd'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CreateMenu from './CreateMenu'
 import type { IAction } from '@/types/modal'
+import { message } from '@/utils/AntdGlobal'
 
 const MenuList: React.FC = () => {
   const [form] = Form.useForm()
@@ -28,6 +29,33 @@ const MenuList: React.FC = () => {
   const menuRef = useRef<{
     open: (type: IAction, data?: EditMenuParams | { parentId: string }) => void
   }>(undefined)
+
+  const handleAddSub = (parentId: string) => {
+    menuRef.current?.open('create', { parentId })
+  }
+
+  const handleEdit = useCallback(
+    (record?: EditMenuParams) => {
+      menuRef.current?.open('edit', record)
+    },
+    [menuRef]
+  )
+
+  const handleDelete = (id: string) => {
+    Modal.confirm({
+      title: '提示',
+      content: '确定要删除选中的菜单吗？',
+      cancelText: '取消',
+      okText: '确定',
+      onOk: async () => {
+        await deleteMenuApi({
+          _id: id
+        })
+        message.success('删除成功!')
+        getMenuList()
+      }
+    })
+  }
 
   const columns: TableProps<MenuItem>['columns'] = [
     {
@@ -72,7 +100,12 @@ const MenuList: React.FC = () => {
       title: '状态',
       dataIndex: 'menuState',
       key: 'menuState',
-      width: 150
+      render(value: number) {
+        return {
+          1: '正常',
+          2: '停用'
+        }[value]
+      }
     },
     {
       title: '创建时间',
@@ -85,16 +118,16 @@ const MenuList: React.FC = () => {
     {
       title: '操作',
       key: 'action',
-      render() {
+      render(_, record) {
         return (
           <Space>
-            <Button color='primary' variant='link'>
+            <Button color='primary' variant='link' onClick={() => handleAddSub(record._id)}>
               新增
             </Button>
-            <Button variant='link' color='cyan'>
+            <Button variant='link' color='cyan' onClick={() => handleEdit(record)}>
               编辑
             </Button>
-            <Button type='link' danger>
+            <Button type='link' danger onClick={() => handleDelete(record._id)}>
               删除
             </Button>
           </Space>

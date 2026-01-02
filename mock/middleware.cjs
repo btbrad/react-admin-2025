@@ -187,8 +187,8 @@ module.exports = (req, res, next) => {
       data: [
         {
           _id: 1,
-          menuName: "Dashboard",
-          icon: "dashboard",
+          menuName: "工作台",
+          icon: "DesktopOutlined",
           path: "/dashboard",
           menuType: 1,
           menuState: 1,
@@ -208,7 +208,44 @@ module.exports = (req, res, next) => {
               component: "Dashboard",
             }
           ]
-        }
+        },
+        {
+          _id: 3,
+          menuName: "系统管理",
+          icon: "SettingOutlined",
+          path: "",
+          menuType: 1,
+          menuState: 1,
+          menuCode: '',
+          parentId: 0,
+          component: "",
+          children: [
+            {
+              _id: 5,
+              menuName: "用户管理",
+              icon: "TeamOutlined",
+              path: "/userList",
+              menuType: 1,
+              menuState: 1,
+              menuCode: '',
+              parentId: 3,
+              component: "User",
+              orderBy: 1
+            },
+          ]
+        },
+        {
+          _id: 4,
+          menuName: "订单管理",
+          icon: "DatabaseOutlined",
+          path: "",
+          menuType: 1,
+          menuState: 1,
+          menuCode: '',
+          parentId: 0,
+          component: "",
+          children: []
+        },
       ],
       msg: "获取菜单成功"
     })

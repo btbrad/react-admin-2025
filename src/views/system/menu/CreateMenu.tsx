@@ -101,7 +101,7 @@ const CreateMenu: React.FC<IModalProps<MenuItem>> = props => {
           parentId: '',
           path: '',
           component: '',
-          sort: 3,
+          orderBy: 1,
           icon: ''
         }}
       >
@@ -151,7 +151,7 @@ const CreateMenu: React.FC<IModalProps<MenuItem>> = props => {
         <Form.Item label='组件名称' name='component'>
           <Input placeholder='请输入组件名称' />
         </Form.Item>
-        <Form.Item label='排序' name='sort' tooltip={{ title: '数字越小越靠前', icon: <InfoCircleOutlined /> }}>
+        <Form.Item label='排序' name='orderBy' tooltip={{ title: '数字越小越靠前', icon: <InfoCircleOutlined /> }}>
           <InputNumber min={0} max={10} defaultValue={3} />
         </Form.Item>
         <Form.Item label='菜单状态' name='menuState'>
