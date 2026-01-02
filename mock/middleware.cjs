@@ -213,7 +213,7 @@ module.exports = (req, res, next) => {
           _id: 3,
           menuName: "系统管理",
           icon: "SettingOutlined",
-          path: "",
+          path: "system",
           menuType: 1,
           menuState: 1,
           menuCode: '',
@@ -231,6 +231,42 @@ module.exports = (req, res, next) => {
               parentId: 3,
               component: "User",
               orderBy: 1
+            },
+            {
+              _id: 6,
+              menuName: "菜单管理",
+              icon: "MenuOutlined",
+              path: "/menuList",
+              menuType: 1,
+              menuState: 1,
+              menuCode: '',
+              parentId: 3,
+              component: "Menu",
+              orderBy: 2
+            },
+            {
+              _id: 7,
+              menuName: "角色管理",
+              icon: "TrademarkCircleOutlined",
+              path: "/roleList",
+              menuType: 1,
+              menuState: 1,
+              menuCode: '',
+              parentId: 3,
+              component: "Role",
+              orderBy: 2
+            },
+            {
+              _id: 8,
+              menuName: "部门管理管理",
+              icon: "ProfileOutlined",
+              path: "/deptList",
+              menuType: 1,
+              menuState: 1,
+              menuCode: '',
+              parentId: 3,
+              component: "Dept",
+              orderBy: 2
             },
           ]
         },
